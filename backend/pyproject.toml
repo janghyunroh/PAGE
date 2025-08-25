@@ -1,0 +1,25 @@
+[project]
+name = "page-backend"
+version = "0.1.0"
+description = "Backend for the Personalized Article Generation Engine (P.A.G.E.)"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "python-dotenv",
+
+    "pinecone==6.0.0",
+    "langchain==0.3.27",
+    "langchain-community==0.3.27",
+    "unstructured[md]==0.18.13",
+    "langchain-pinecone==0.2.11",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "httpx", 
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
