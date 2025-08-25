@@ -1,12 +1,15 @@
 fastapi
 uvicorn[standard]
 python-dotenv
+python-multipart
 pinecone==6.0.0
 langchain==0.3.27
 langchain-community==0.3.27
 unstructured[md]==0.18.13
 langchain-pinecone==0.2.11
+langchain-ollama
 
 [test]
 pytest
 httpx
+pytest-mock

@@ -1,23 +1,31 @@
+# ==============================================================================
+# 파일: backend/pyproject.toml (최종 버전)
+# ==============================================================================
 [project]
 name = "page-backend"
 version = "0.1.0"
 description = "Backend for the Personalized Article Generation Engine (P.A.G.E.)"
 dependencies = [
+    # FastAPI 기본
     "fastapi",
     "uvicorn[standard]",
     "python-dotenv",
+    "python-multipart", # CORS 미들웨어를 위해 추가
 
+    # RAG 및 AI 관련
     "pinecone==6.0.0",
     "langchain==0.3.27",
     "langchain-community==0.3.27",
     "unstructured[md]==0.18.13",
     "langchain-pinecone==0.2.11",
+    "langchain-ollama",
 ]
 
 [project.optional-dependencies]
 test = [
     "pytest",
-    "httpx", 
+    "httpx",
+    "pytest-mock",
 ]
 
 [build-system]

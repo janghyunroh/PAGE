@@ -2,9 +2,12 @@ pyproject.toml
 app/dependencies.py
 app/main.py
 app/models.py
+app/services/__init__.py
+app/services/rag_service.py
 page_backend.egg-info/PKG-INFO
 page_backend.egg-info/SOURCES.txt
 page_backend.egg-info/dependency_links.txt
 page_backend.egg-info/requires.txt
 page_backend.egg-info/top_level.txt
 tests/test_main.py
+tests/test_rag_service.py

@@ -1,10 +1,15 @@
+<div align="center">
+
+  <!-- markdownlint-disable-next-line -->
+
 # P.A.G.E. (Personalized Article Generation Engine)
 
 **나의 글쓰기 과정을 자동화하기 위해 시작한 개인 AI 프로젝트, P.A.G.E.를 소개합니다.**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Flutter](https://img.shields.io/badge/Frontend-Flutter-blue)](https://flutter.dev)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-green)](https://fastapi.tiangolo.com/)
+
+</div>
 
 ---
 

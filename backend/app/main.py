@@ -1,11 +1,19 @@
 # ==============================================================================
 # 파일: backend/app/main.py
-# 역할: FastAPI 애플리케이션의 메인 파일입니다. API 엔드포인트를 정의합니다.
-#       (순환 참조를 유발할 수 있는 불필요한 import를 제거했습니다.)
+# 역할: FastAPI 애플리케이션의 메인 파일입니다.
+#       CORS 미들웨어가 로드되었는지 확인하기 위한 디버깅 코드를 추가했습니다.
 # ==============================================================================
 from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from .dependencies import get_api_key
 from .models import DraftRequest, DraftResponse
+from .services.rag_service import generate_draft_from_topic
+
+# =================================================================
+# ✅ 최종 디버깅: 이 메시지가 서버 시작 로그에 반드시 보여야 합니다.
+# 만약 이 메시지가 보이지 않는다면, Uvicorn이 이 파일을 실행하고 있지 않은 것입니다.
+print("✅✅✅ Loading main.py with CORS Middleware ENABLED! ✅✅✅")
+# =================================================================
 
 # FastAPI 앱 인스턴스를 생성합니다.
 app = FastAPI(
@@ -13,6 +21,19 @@ app = FastAPI(
     description="AI 블로그 초안 생성기 P.A.G.E.의 백엔드 API입니다.",
     version="0.1.0",
 )
+
+# --- [CORS 설정] ---
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+# -------------------------
+
 
 @app.get("/")
 def read_root():
@@ -32,22 +53,6 @@ async def generate_draft(request: DraftRequest):
     """
     print(f"Received topic: {request.topic}")
     
-    # --- TODO: 여기에 RAG 및 LLM 호출 로직을 추가할 예정입니다. ---
+    generated_draft = await generate_draft_from_topic(request.topic)
     
-    # 현재는 더미 데이터를 반환합니다.
-    dummy_draft = f"""---
-title: {request.topic}
-description: This is a draft about {request.topic}.
-author: janghyunroh
-date: 2025-08-25 10:30 +0900
-categories: [New]
-tags: [Draft]
----
-
-# {request.topic}에 대한 초안
-
-이것은 **{request.topic}**에 대해 AI가 생성한 블로그 포스트 초안의 시작입니다.
-여기에 RAG를 통해 검색된 내용과 LLM이 생성한 본문이 채워질 예정입니다.
-"""
-    
-    return DraftResponse(draft=dummy_draft)
+    return DraftResponse(draft=generated_draft)

@@ -5,11 +5,14 @@ Summary: Backend for the Personalized Article Generation Engine (P.A.G.E.)
 Requires-Dist: fastapi
 Requires-Dist: uvicorn[standard]
 Requires-Dist: python-dotenv
+Requires-Dist: python-multipart
 Requires-Dist: pinecone==6.0.0
 Requires-Dist: langchain==0.3.27
 Requires-Dist: langchain-community==0.3.27
 Requires-Dist: unstructured[md]==0.18.13
 Requires-Dist: langchain-pinecone==0.2.11
+Requires-Dist: langchain-ollama
 Provides-Extra: test
 Requires-Dist: pytest; extra == "test"
 Requires-Dist: httpx; extra == "test"
+Requires-Dist: pytest-mock; extra == "test"

@@ -5,7 +5,7 @@
 # ==============================================================================
 import os
 from langchain_pinecone import PineconeVectorStore
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
@@ -28,13 +28,14 @@ retriever = vectorstore.as_retriever()
 # LLM에게 전달할 프롬프트 템플릿을 정의합니다.
 # 이 프롬프트가 LLM의 역할과 출력 형식을 결정하는 가장 중요한 부분입니다.
 prompt_template = """
-너는 나의 글쓰기 스타일과 지식을 학습한 전문 IT 블로거 AI 어시스턴트야.
+당신은 저의 글쓰기 스타일과 지식을 학습한 전문 IT 블로거 AI 어시스턴트입니다.
 
-아래에 제공된 나의 기존 블로그 글 내용들을 바탕으로, 다음 주제에 대한 새로운 블로그 글의 초안을 작성해줘.
+아래에 제공된 저의 기존 블로그 글 내용들을 바탕으로, 다음 주제에 대한 새로운 블로그 글의 초안을 작성하십시오.
+반드시 한국어로 작성해야 합니다.
 
 **[출력 규칙]**
-1. 반드시 Jekyll 블로그 포스트 형식에 맞는 마크다운으로 결과물을 생성해야 해.
-2. 글의 시작 부분에는 반드시 아래와 같은 YAML Front Matter를 포함해야 해.
+1. 반드시 Jekyll 블로그 포스트 형식에 맞는 마크다운으로 결과물을 생성해야 합니다.
+2. 글의 시작 부분에는 반드시 아래와 같은 YAML Front Matter를 포함하세요.
 ---
 title: {topic}
 description: {topic}에 대한 AI 생성 초안입니다.
@@ -45,8 +46,8 @@ tags: [AI-Generated, {topic}]
 math: true
 mermaid: true
 ---
-3. 나의 기존 글쓰기 스타일과 톤을 최대한 반영해서 자연스럽게 작성해줘.
-4. 컨텍스트에 없는 내용은 지어내지 말고, 주어진 정보를 중심으로 논리적으로 글을 구성해줘.
+3. 저의 기존 글쓰기 스타일과 톤을 최대한 반영해서 자연스럽게 작성하세요.
+4. 컨텍스트에 없는 내용은 지어내지 말고, 주어진 정보를 중심으로 논리적으로 글을 구성해주세요.
 
 **[나의 기존 블로그 글 내용 (컨텍스트)]**
 {context}
