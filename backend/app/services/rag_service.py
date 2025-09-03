@@ -23,7 +23,9 @@ vectorstore = PineconeVectorStore.from_existing_index(
 )
 
 # VectorStore를 '검색기(Retriever)'로 변환하여 질문과 관련된 문서를 찾아오도록 합니다.
-retriever = vectorstore.as_retriever()
+retriever = vectorstore.as_retriever(
+    search_kwargs={"k": 5}
+)
 
 # LLM에게 전달할 프롬프트 템플릿을 정의합니다.
 # 이 프롬프트가 LLM의 역할과 출력 형식을 결정하는 가장 중요한 부분입니다.
@@ -62,7 +64,12 @@ prompt = ChatPromptTemplate.from_template(prompt_template)
 # 로컬에서 실행 중인 Llama3 모델에 연결합니다.
 # (Ollama를 사용한다고 가정)
 print("Connecting to local Llama3 server...")
-llm = ChatOllama(model="llama3", base_url=os.getenv("LLAMA3_SERVER_URL"))
+llm = ChatOllama(
+    model="llama3:70b", 
+    # model="llama3", 
+    base_url=os.getenv("LLAMA3_SERVER_URL"),
+    temperature=0.3
+)
 
 # RAG 체인을 구성합니다.
 # 이 체인이 (1)검색 -> (2)프롬프트 조합 -> (3)LLM 호출 -> (4)결과 파싱 과정을 자동으로 처리합니다.
